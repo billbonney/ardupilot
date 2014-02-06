@@ -142,9 +142,9 @@
 
 
 // optical flow doesn't work in SITL yet
-#ifdef DESKTOP_BUILD
-# define OPTFLOW DISABLED
-#endif
+// #ifdef DESKTOP_BUILD
+	#define OPTFLOW DISABLED
+// #endif
 
 
 //////////////////////////////////////////////////////////////////////////////
