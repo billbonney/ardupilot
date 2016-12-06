@@ -512,6 +512,7 @@ void AC_PosControl::set_accel_xy(float accel_cmss)
 void AC_PosControl::set_speed_xy(float speed_cms)
 {
     if (fabsf(_speed_cms-speed_cms) > 1.0f) {
+         hal.console->printf("AC_PosControl set speed %f\n", speed_cms);
         _speed_cms = speed_cms;
         _flags.recalc_leash_xy = true;
         calc_leash_length_xy();

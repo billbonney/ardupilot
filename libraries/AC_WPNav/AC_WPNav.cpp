@@ -391,6 +391,7 @@ void AC_WPNav::update_brake(float ekfGndSpdLimit, float ekfNavVelGainScaler)
 ///     should be called once before the waypoint controller is used but does not need to be called before subsequent updates to destination
 void AC_WPNav::wp_and_spline_init()
 {
+    hal.console->printf("AC_WPNAV Init WP/Spline\n");
     // check _wp_accel_cms is reasonable
     if (_wp_accel_cms <= 0) {
         _wp_accel_cms.set_and_save(WPNAV_ACCELERATION);
@@ -408,7 +409,7 @@ void AC_WPNav::wp_and_spline_init()
     _pos_control.init_xy_controller();
 
     // initialise position controller speed and acceleration
-    _pos_control.set_speed_xy(_wp_speed_cms);
+    set_speed_xy(_wp_speed_cms);
     _pos_control.set_accel_xy(_wp_accel_cms);
     _pos_control.set_jerk_xy_to_default();
     _pos_control.set_speed_z(-_wp_speed_down_cms, _wp_speed_up_cms);
@@ -422,6 +423,7 @@ void AC_WPNav::set_speed_xy(float speed_cms)
 {
     // range check new target speed and update position controller
     if (speed_cms >= WPNAV_WP_SPEED_MIN) {
+	hal.console->printf("*** Updated WPNAV_SPEED %f\n", speed_cms);
         _wp_speed_cms = speed_cms;
         _pos_control.set_speed_xy(_wp_speed_cms);
         // flag that wp leash must be recalculated
@@ -771,9 +773,9 @@ bool AC_WPNav::update_wpnav()
 void AC_WPNav::check_wp_leash_length()
 {
     // exit immediately if recalc is not required
-    if (_flags.recalc_wp_leash) {
+   // if (_flags.recalc_wp_leash) {
         calculate_wp_leash_length();
-    }
+    //}
 }
 
 /// calculate_wp_leash_length - calculates horizontal and vertical leash lengths for waypoint controller
